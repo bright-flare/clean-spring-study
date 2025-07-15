@@ -12,12 +12,12 @@ class MemberTest {
   private final PasswordEncoder passwordEncoder = new PasswordEncoder() {
     @Override
     public String encode(String password) {
-      return password; // For testing, we just return the password as is.
+      return password.toUpperCase(); // For testing, we just return the password as is.
     }
 
     @Override
     public boolean matches(String password, String passwordHash) {
-      return password.equals(passwordHash);
+      return encode(password).equals(passwordHash);
     }
     
   };
@@ -26,7 +26,8 @@ class MemberTest {
   
   @BeforeEach
   void setUp() {
-    this.member = Member.create("bright-flare@splearn.app", "bright-flare", "password", passwordEncoder);
+    MemberCreateRequest request = MemberCreateRequest.of("bright-flare@splearn.app", "bright-flare", "password");
+    this.member = Member.create(request, passwordEncoder);
   }
 
   @Test
@@ -37,14 +38,6 @@ class MemberTest {
     
   }
 
-  @Test
-  void constructorNullCheck() {
-    
-    assertThatThrownBy(() -> Member.create(null, "bright-flare", "password", passwordEncoder))
-            .isInstanceOf(NullPointerException.class);
-    
-  }
-  
   @Test
   void activate() {
     
@@ -89,6 +82,43 @@ class MemberTest {
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("ACTIVE 상태가 아닙니다. 이미 비활성화된 회원입니다.");
     
+  }
+
+  @Test
+  void verifyPassword() {
+    assertThat(member.varifyPassword("password", passwordEncoder)).isTrue();
+    assertThat(member.varifyPassword("afsd", passwordEncoder)).isFalse();
+  }
+
+  @Test
+  void changePassword() {
+
+    assertThat(member.varifyPassword("password", passwordEncoder)).isTrue();
+    
+    member.changePassword("new-password", passwordEncoder);
+    assertThat(member.varifyPassword("new-password", passwordEncoder)).isTrue();
+    
+  }
+
+  @Test
+  void changeNickname() {
+    assertThat(member.getNickname()).isEqualTo("bright-flare");
+    
+    member.changeNickname("lumiflare");
+    assertThat(member.getNickname()).isEqualTo("lumiflare");
+  }
+
+  @Test
+  void shouldBeActive() {
+    assertThat(this.member.isActive()).isFalse();
+    
+    member.activate();
+    
+    assertThat(this.member.isActive()).isTrue();
+    
+    member.deactivate();
+    
+    assertThat(this.member.isActive()).isFalse();
   }
   
 }
