@@ -4,21 +4,19 @@ import lombok.Getter;
 import lombok.ToString;
 import org.springframework.util.Assert;
 
-import java.util.Objects;
-
 import static java.util.Objects.requireNonNull;
 
 @Getter
 @ToString
 public class Member {
 
-  String email;
+  private Email email;
   
-  String nickname;
+  private String nickname;
 
-  String passwordHash;
+  private String passwordHash;
 
-  MemberStatus status;
+  private MemberStatus status;
   
   private Member() {}
 
@@ -26,7 +24,7 @@ public class Member {
     
     Member member = new Member();
     
-    member.email = requireNonNull(createRequest.email());
+    member.email = new Email(createRequest.email());
     member.nickname = requireNonNull(createRequest.nickname());
     member.passwordHash = requireNonNull(passwordEncoder.encode(createRequest.password()));
     member.status = MemberStatus.PENDING;
