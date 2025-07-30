@@ -26,12 +26,12 @@ class MemberTest {
   
   @BeforeEach
   void setUp() {
-    MemberCreateRequest request = MemberCreateRequest.of("bright-flare@splearn.app", "bright-flare", "password");
-    this.member = Member.create(request, passwordEncoder);
+    MemberRegisterRequest request = MemberRegisterRequest.of("bright-flare@splearn.app", "bright-flare", "password");
+    this.member = Member.register(request, passwordEncoder);
   }
 
   @Test
-  void createMember() {
+  void registerMember() {
     
     // then
     assertThat(member.getStatus()).isEqualTo(MemberStatus.PENDING);
@@ -123,10 +123,10 @@ class MemberTest {
   
   @Test
   void invalidEmail() {
-    assertThatThrownBy(() -> Member.create(MemberCreateRequest.of("invalid-email", "nickname", "password"), passwordEncoder))
+    assertThatThrownBy(() -> Member.register(MemberRegisterRequest.of("invalid-email", "nickname", "password"), passwordEncoder))
             .isInstanceOf(IllegalArgumentException.class);
 
-    Member.create(MemberCreateRequest.of("orolsyeo@gmail.com", "nickname", "password"), passwordEncoder);
+    Member.register(MemberRegisterRequest.of("orolsyeo@gmail.com", "nickname", "password"), passwordEncoder);
 
   }
   
