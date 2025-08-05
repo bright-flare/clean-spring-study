@@ -3,6 +3,8 @@ package clean.spring.study.splearn.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.ToString;
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.NaturalIdCache;
 import org.springframework.util.Assert;
 
 import static java.util.Objects.requireNonNull;
@@ -10,6 +12,7 @@ import static java.util.Objects.requireNonNull;
 @Getter
 @ToString
 @Entity
+@NaturalIdCache
 public class Member {
   
   @Id
@@ -17,6 +20,7 @@ public class Member {
   private Long id;
 
   @Embedded
+  @NaturalId // 자연 키로 사용, 이메일은 유일해야 함, unique 제약 조건을 추가할 수 있음
   private Email email;
   
   private String nickname;
