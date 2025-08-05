@@ -1,5 +1,6 @@
 package clean.spring.study.splearn.domain;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.util.Assert;
@@ -8,18 +9,25 @@ import static java.util.Objects.requireNonNull;
 
 @Getter
 @ToString
+@Entity
 public class Member {
+  
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
+  @Embedded
   private Email email;
   
   private String nickname;
 
   private String passwordHash;
 
+  @Enumerated(EnumType.STRING)
   private MemberStatus status;
   
-  private Member() {}
-
+  protected Member(){}
+  
   public static Member register(MemberRegisterRequest registerRequest, PasswordEncoder passwordEncoder) {
     
     Member member = new Member();
