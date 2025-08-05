@@ -3,35 +3,26 @@ package clean.spring.study.splearn.domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static clean.spring.study.splearn.domain.MemberFixture.createMemberRegister;
+import static clean.spring.study.splearn.domain.MemberFixture.createPasswordEncoder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 class MemberTest {
-  
-  private final PasswordEncoder passwordEncoder = new PasswordEncoder() {
-    @Override
-    public String encode(String password) {
-      return password.toUpperCase(); // For testing, we just return the password as is.
-    }
 
-    @Override
-    public boolean matches(String password, String passwordHash) {
-      return encode(password).equals(passwordHash);
-    }
-    
-  };
+  private final PasswordEncoder passwordEncoder = createPasswordEncoder();
   
   Member member;
   
   @BeforeEach
   void setUp() {
-    MemberCreateRequest request = MemberCreateRequest.of("bright-flare@splearn.app", "bright-flare", "password");
-    this.member = Member.create(request, passwordEncoder);
+    MemberRegisterRequest request = createMemberRegister();
+    this.member = Member.register(request, passwordEncoder);
   }
 
   @Test
-  void createMember() {
+  void registerMember() {
     
     // then
     assertThat(member.getStatus()).isEqualTo(MemberStatus.PENDING);
@@ -123,10 +114,10 @@ class MemberTest {
   
   @Test
   void invalidEmail() {
-    assertThatThrownBy(() -> Member.create(MemberCreateRequest.of("invalid-email", "nickname", "password"), passwordEncoder))
+    assertThatThrownBy(() -> Member.register(createMemberRegister("invalid email"), passwordEncoder))
             .isInstanceOf(IllegalArgumentException.class);
 
-    Member.create(MemberCreateRequest.of("orolsyeo@gmail.com", "nickname", "password"), passwordEncoder);
+    Member.register(MemberRegisterRequest.of("orolsyeo@gmail.com", "nickname", "password"), passwordEncoder);
 
   }
   
