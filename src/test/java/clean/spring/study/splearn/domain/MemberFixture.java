@@ -2,11 +2,11 @@ package clean.spring.study.splearn.domain;
 
 public class MemberFixture {
  
-  public static MemberRegisterRequest createMemberRegister() {
+  public static MemberRegisterRequest createMemberRegisterRequest() {
     return MemberRegisterRequest.of("bright-flare@splearn.app", "bright-flare", "password");
   }
 
-  public static MemberRegisterRequest createMemberRegister(String invalidEmail) {
+  public static MemberRegisterRequest createMemberRegisterRequest(String invalidEmail) {
     return MemberRegisterRequest.of(invalidEmail, "nickname", "password");
   }
   
