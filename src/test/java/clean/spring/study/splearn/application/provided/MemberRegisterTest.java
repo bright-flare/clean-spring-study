@@ -1,20 +1,20 @@
 package clean.spring.study.splearn.application.provided;
 
-import clean.spring.study.splearn.application.required.EmailSender;
+import clean.spring.study.splearn.application.SplearnTestConfiguration;
 import clean.spring.study.splearn.domain.*;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
-public class MemberRegisterTest {
-  
-  @Autowired
-  private MemberRegister memberRegister;
+@Transactional
+@Import(SplearnTestConfiguration.class)
+//@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL) // junit-platform.properties 설정으로 대체가능.
+public record MemberRegisterTest(MemberRegister memberRegister) {
 
   @Test
   void register() {
@@ -24,19 +24,23 @@ public class MemberRegisterTest {
     assertThat(member.getStatus()).isEqualTo(MemberStatus.PENDING);
     
   }
+  
+  @Test
+  void duplicateEmailFail() {
+    
+    Member member = memberRegister.register(MemberFixture.createMemberRegisterRequest());
 
-  @TestConfiguration
-  static class MemberTestConfiguration {
+    assertThatThrownBy(() -> memberRegister.register(MemberFixture.createMemberRegisterRequest()))
+            .isInstanceOf(DuplicateEmailException.class);
     
-    @Bean
-    EmailSender emailSender() {
-      return (email, subject, content) -> System.out.println("email send !! " + email);
-    }
-    
-    @Bean
-    PasswordEncoder passwordEncoder() {
-      return MemberFixture.createPasswordEncoder();
-    }
+  }
+
+  @Test
+  void memberRegisterRequestFail() {
+
+    MemberRegisterRequest request = new MemberRegisterRequest("orolsyeo@gmail.com", "bright-flare", "sseob");
+
+    memberRegister.register(request);
     
   }
 }
