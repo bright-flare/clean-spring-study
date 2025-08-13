@@ -1,8 +1,11 @@
 package clean.spring.study.splearn.application.required;
 
 
+import clean.spring.study.splearn.domain.Email;
 import clean.spring.study.splearn.domain.Member;
 import org.springframework.data.repository.Repository;
+
+import java.util.Optional;
 
 /**
  * MemberRepository 인터페이스는 회원 도메인 객체를 저장하고 조회하는 메서드를 정의합니다.
@@ -11,5 +14,7 @@ import org.springframework.data.repository.Repository;
 public interface MemberRepository extends Repository<Member,Long> {
   
   Member save(Member member);
+  
+  Optional<Member> findByEmail(Email email);
   
 }
