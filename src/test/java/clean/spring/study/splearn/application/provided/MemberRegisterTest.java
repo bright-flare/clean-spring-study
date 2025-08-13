@@ -3,7 +3,6 @@ package clean.spring.study.splearn.application.provided;
 import clean.spring.study.splearn.application.SplearnTestConfiguration;
 import clean.spring.study.splearn.domain.*;
 import jakarta.persistence.EntityManager;
-import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Transactional
 @Import(SplearnTestConfiguration.class)
 //@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL) // junit-platform.properties 설정으로 대체가능.
-public record MemberRegisterTest(MemberRegister memberRegister, EntityManager entityManager) {
+record MemberRegisterTest(MemberRegister memberRegister, EntityManager entityManager) {
 
   @Test
   void register() {
@@ -52,12 +51,12 @@ public record MemberRegisterTest(MemberRegister memberRegister, EntityManager en
 
   @Test
   void memberRegisterRequestFail() {
-    invalidRegister(new MemberRegisterRequest("orolsyeo@gmail.com", "brighdddddddddddddddddddddddt-flare", "sseob")); // username too long
-    invalidRegister(new MemberRegisterRequest("orolsyeo@gmail.com", "b-flare", "short")); // password too short
-    invalidRegister(new MemberRegisterRequest("orolsyeo", "b-flare", "sseddddddd")); // invalid email
+    checkValidation(new MemberRegisterRequest("orolsyeo@gmail.com", "brighdddddddddddddddddddddddt-flare", "sseob")); // username too long
+    checkValidation(new MemberRegisterRequest("orolsyeo@gmail.com", "b-flare", "short")); // password too short
+    checkValidation(new MemberRegisterRequest("orolsyeo", "b-flare", "sseddddddd")); // invalid email
   }
 
-  private void invalidRegister(MemberRegisterRequest request) {
+  private void checkValidation(MemberRegisterRequest request) {
     assertThatThrownBy(() -> memberRegister.register(request))
             .isInstanceOf(ConstraintViolationException.class);
   }
