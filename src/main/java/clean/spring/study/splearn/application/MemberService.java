@@ -1,10 +1,10 @@
 package clean.spring.study.splearn.application;
 
+import clean.spring.study.splearn.application.provided.MemberFinder;
 import clean.spring.study.splearn.application.provided.MemberRegister;
 import clean.spring.study.splearn.application.required.EmailSender;
 import clean.spring.study.splearn.application.required.MemberRepository;
 import clean.spring.study.splearn.domain.*;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,14 +14,14 @@ import org.springframework.validation.annotation.Validated;
 @Transactional
 @Validated
 @RequiredArgsConstructor
-public class MemberService implements MemberRegister {
+public class MemberService implements MemberRegister, MemberFinder {
   
   private final MemberRepository memberRepository;
   private final EmailSender emailSender;
   private final PasswordEncoder passwordEncoder;
 
   @Override
-  public Member register(@Valid MemberRegisterRequest registerRequest) {
+  public Member register(MemberRegisterRequest registerRequest) {
     
     checkDuplicateEmail(registerRequest);
 
@@ -33,6 +33,21 @@ public class MemberService implements MemberRegister {
 
     return member;
 
+  }
+
+  @Override
+  public Member activate(Long memberId) {
+
+    Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다: " + memberId));
+    member.activate();
+
+    return memberRepository.save(member); // 현재 spring data 진영에서는 update를 위하여 save를 명시적으로 호출하는 것을 권유함.
+  }
+
+  @Override
+  public Member find(Long memberId) {
+    return memberRepository.findById(memberId)
+        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다: " + memberId));
   }
 
   private void sendWelcomeEmail(Member member) {
