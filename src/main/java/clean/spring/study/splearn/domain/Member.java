@@ -2,6 +2,7 @@ package clean.spring.study.splearn.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.NaturalIdCache;
@@ -10,30 +11,20 @@ import org.springframework.util.Assert;
 import static java.util.Objects.requireNonNull;
 
 @Entity
-@Table(name = "member", uniqueConstraints = 
-  @UniqueConstraint(name = "uk_member_email_address", columnNames = "email_address")
-)
 @Getter
-@ToString
+@ToString(callSuper = true)
 @NaturalIdCache
+@NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 public class Member extends AbstractEntity {
 
-  @Embedded
   @NaturalId // 자연 키로 사용, 이메일은 유일해야 함, unique 제약 조건을 추가할 수 있음
   private Email email;
 
-  @Column(length = 100, nullable = false)
   private String nickname;
 
-  @Column(length = 200, nullable = false)
   private String passwordHash;
 
-  @Enumerated(EnumType.STRING)
-  @Column(length = 50, nullable = false)
   private MemberStatus status;
-
-  protected Member() {
-  }
 
   public static Member register(MemberRegisterRequest registerRequest, PasswordEncoder passwordEncoder) {
 

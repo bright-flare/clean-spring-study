@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence/orm
+                 https://jakarta.ee/xml/ns/persistence/orm/orm_3_0.xsd"
+                 version="3.0">
+
+  <!-- AbstractEntity MappedSuperclass -->
+  <mapped-superclass class="clean.spring.study.splearn.domain.AbstractEntity">
+    <attributes>
+      <id name="id">
+        <column name="id"/>
+        <generated-value strategy="IDENTITY"/>
+      </id>
+    </attributes>
+  </mapped-superclass>
+  
+  <!-- Member Entity Mapping -->
+  <entity class="clean.spring.study.splearn.domain.Member">
+    <table name="member">
+      <unique-constraint name="uk_member_email_address">
+        <column-name>email_address</column-name>
+      </unique-constraint>
+    </table>
+
+    <!-- Inherited ID from AbstractEntity -->
+    <attributes>
+      <id name="id">
+        <column name="id"/>
+        <generated-value strategy="IDENTITY"/>
+      </id>
+
+      <!-- Email (Embedded) -->
+      <embedded name="email">
+        <attribute-override name="email">
+          <column name="email_address" nullable="false" length="150"/>
+        </attribute-override>
+      </embedded>
+
+      <!-- Basic attributes -->
+      <basic name="nickname">
+        <column name="nickname" nullable="false" length="100"/>
+      </basic>
+
+      <basic name="passwordHash">
+        <column name="password_hash" nullable="false" length="200"/>
+      </basic>
+
+      <basic name="status">
+        <column name="status" nullable="false" length="50" column-definition="varchar(50)"/>
+        <enumerated>STRING</enumerated>
+      </basic>
+    </attributes>
+  </entity>
+
+  <!-- Email Embeddable Mapping -->
+  <embeddable class="clean.spring.study.splearn.domain.Email">
+    <attributes>
+      <basic name="email">
+        <column name="email_address" nullable="false" length="150"/>
+      </basic>
+    </attributes>
+  </embeddable>
+
+</entity-mappings>

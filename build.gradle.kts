@@ -2,6 +2,7 @@ plugins {
   java
   id("org.springframework.boot") version "3.5.3"
   id("io.spring.dependency-management") version "1.1.7"
+  id("com.github.spotbugs") version "6.1.11"
 }
 
 group = "clean.spring.study"
@@ -44,4 +45,8 @@ dependencies {
 tasks.withType<Test> {
   useJUnitPlatform()
   jvmArgs = listOf("-javaagent:${mockitoAgent.asPath}")
+}
+
+spotbugs {
+  excludeFilter.set(file("${projectDir}/spotbugs-exclude-filter.xml"))
 }
