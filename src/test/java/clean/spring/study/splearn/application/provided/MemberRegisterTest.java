@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
-@Transactional
+@Transactional 
 @Import(SplearnTestConfiguration.class)
 //@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL) // junit-platform.properties 설정으로 대체가능.
 record MemberRegisterTest(MemberRegister memberRegister, EntityManager entityManager) {
@@ -21,6 +21,8 @@ record MemberRegisterTest(MemberRegister memberRegister, EntityManager entityMan
   @Test
   void register() {
     Member member = memberRegister.register(MemberFixture.createMemberRegisterRequest());
+
+    System.out.println(member);
 
     assertThat(member.getId()).isNotNull();
     assertThat(member.getStatus()).isEqualTo(MemberStatus.PENDING);
