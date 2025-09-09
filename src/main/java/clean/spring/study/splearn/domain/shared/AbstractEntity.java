@@ -1,4 +1,4 @@
-package clean.spring.study.splearn.domain;
+package clean.spring.study.splearn.domain.shared;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

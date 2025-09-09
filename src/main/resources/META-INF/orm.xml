@@ -6,7 +6,7 @@
                  version="3.0">
 
   <!-- AbstractEntity MappedSuperclass -->
-  <mapped-superclass class="clean.spring.study.splearn.domain.AbstractEntity">
+  <mapped-superclass class="clean.spring.study.splearn.domain.shared.AbstractEntity">
     <attributes>
       <id name="id">
         <column name="id"/>
@@ -16,7 +16,7 @@
   </mapped-superclass>
   
   <!-- Member Entity Mapping -->
-  <entity class="clean.spring.study.splearn.domain.Member">
+  <entity class="clean.spring.study.splearn.domain.member.Member">
     <table name="member">
       <unique-constraint name="uk_member_email_address">
         <column-name>email_address</column-name>
@@ -54,7 +54,7 @@
   </entity>
 
   <!-- Email Embeddable Mapping -->
-  <embeddable class="clean.spring.study.splearn.domain.Email">
+  <embeddable class="clean.spring.study.splearn.domain.member.Email">
     <attributes>
       <basic name="email">
         <column name="email_address" nullable="false" length="150"/>

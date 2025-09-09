@@ -1,6 +1,6 @@
 package clean.spring.study.splearn.adapter.security;
 
-import clean.spring.study.splearn.domain.PasswordEncoder;
+import clean.spring.study.splearn.domain.member.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 

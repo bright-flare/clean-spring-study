@@ -1,5 +1,6 @@
-package clean.spring.study.splearn.domain;
+package clean.spring.study.splearn.domain.member;
 
+import clean.spring.study.splearn.domain.shared.AbstractEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,9 @@ public class Member extends AbstractEntity {
   private String passwordHash;
 
   private MemberStatus status;
+
+  @OneToOne(fetch = FetchType.LAZY)
+  private MemberDetail detail;
 
   public static Member register(MemberRegisterRequest registerRequest, PasswordEncoder passwordEncoder) {
 

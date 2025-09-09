@@ -1,10 +1,10 @@
-package clean.spring.study.splearn.application;
+package clean.spring.study.splearn.application.member;
 
-import clean.spring.study.splearn.application.provided.MemberFinder;
-import clean.spring.study.splearn.application.provided.MemberRegister;
-import clean.spring.study.splearn.application.required.EmailSender;
-import clean.spring.study.splearn.application.required.MemberRepository;
-import clean.spring.study.splearn.domain.*;
+import clean.spring.study.splearn.application.member.provided.MemberFinder;
+import clean.spring.study.splearn.application.member.provided.MemberRegister;
+import clean.spring.study.splearn.application.member.required.EmailSender;
+import clean.spring.study.splearn.application.member.required.MemberRepository;
+import clean.spring.study.splearn.domain.member.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
