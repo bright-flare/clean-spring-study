@@ -2,6 +2,7 @@ package clean.spring.study.splearn.application.member.required;
 
 import clean.spring.study.splearn.domain.member.Member;
 import clean.spring.study.splearn.domain.member.MemberFixture;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -17,6 +18,9 @@ class MemberRepositoryTest {
 
   @Autowired
   MemberRepository memberRepository;
+  
+  @Autowired
+  EntityManager entityManager;
 
   @Test
   void createMember() {
@@ -27,6 +31,11 @@ class MemberRepositoryTest {
     Member save = memberRepository.save(member);
     
     assertThat(save.getId()).isNotNull();
+    
+    entityManager.flush();
+    entityManager.clear();
+    
+    assertThat(save.getDetail()).isNotNull();
   }
   
   @Test

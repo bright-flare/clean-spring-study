@@ -23,5 +23,13 @@ public class MemberDetail extends AbstractEntity {
   private LocalDateTime activatedAt;
   
   private LocalDateTime deactivatedAt;
+
+  protected static MemberDetail create() {
+
+    MemberDetail memberDetail = new MemberDetail();
+    memberDetail.registeredAt = LocalDateTime.now();
+
+    return memberDetail;
+  }
   
 }

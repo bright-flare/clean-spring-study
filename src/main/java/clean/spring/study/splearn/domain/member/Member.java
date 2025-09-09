@@ -13,7 +13,7 @@ import static java.util.Objects.requireNonNull;
 
 @Entity
 @Getter
-@ToString(callSuper = true)
+@ToString(callSuper = true, exclude = "detail")
 @NaturalIdCache
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 public class Member extends AbstractEntity {
@@ -27,7 +27,7 @@ public class Member extends AbstractEntity {
 
   private MemberStatus status;
 
-  @OneToOne(fetch = FetchType.LAZY)
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private MemberDetail detail;
 
   public static Member register(MemberRegisterRequest registerRequest, PasswordEncoder passwordEncoder) {
@@ -38,7 +38,8 @@ public class Member extends AbstractEntity {
     member.nickname = requireNonNull(registerRequest.nickname());
     member.passwordHash = requireNonNull(passwordEncoder.encode(registerRequest.password()));
     member.status = MemberStatus.PENDING;
-
+    member.detail = MemberDetail.create();
+    
     return member;
   }
 
