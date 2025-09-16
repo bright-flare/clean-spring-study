@@ -2,6 +2,7 @@ package clean.spring.study.splearn.application.member.required;
 
 import clean.spring.study.splearn.domain.member.Member;
 import clean.spring.study.splearn.domain.member.MemberFixture;
+import clean.spring.study.splearn.domain.member.MemberStatus;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +32,16 @@ class MemberRepositoryTest {
     Member save = memberRepository.save(member);
     
     assertThat(save.getId()).isNotNull();
-    
+
     entityManager.flush();
     entityManager.clear();
-    
+
     assertThat(save.getDetail()).isNotNull();
+    
+    Member found = memberRepository.findById(member.getId()).orElseThrow();
+    assertThat(found.getStatus()).isEqualTo(MemberStatus.PENDING);
+    assertThat(found.getDetail().getRegisteredAt()).isNotNull();
+    
   }
   
   @Test

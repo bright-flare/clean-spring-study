@@ -48,6 +48,7 @@ public class Member extends AbstractEntity {
     Assert.state(this.status == MemberStatus.PENDING, "PENDING 상태가 아닙니다. 이미 활성화된 회원입니다.");
 
     this.status = MemberStatus.ACTIVE;
+    this.detail.updateActivatedAt();
   }
 
   public void deactivate() {
@@ -55,6 +56,7 @@ public class Member extends AbstractEntity {
     Assert.state(this.status == MemberStatus.ACTIVE, "ACTIVE 상태가 아닙니다. 이미 비활성화된 회원입니다.");
 
     this.status = MemberStatus.DEACTIVATED;
+    this.detail.updateDeactivatedAt();
   }
 
   public boolean varifyPassword(String password, PasswordEncoder passwordEncoder) {
@@ -67,6 +69,11 @@ public class Member extends AbstractEntity {
 
   public void changePassword(String password, PasswordEncoder passwordEncoder) {
     this.passwordHash = passwordEncoder.encode(requireNonNull(password));
+  }
+
+  public void updateInfo(MemberInfoUpdateRequest updateRequest) {
+    this.nickname = updateRequest.nickname();
+    this.detail.updateInfo(updateRequest);
   }
 
   public boolean isActive() {

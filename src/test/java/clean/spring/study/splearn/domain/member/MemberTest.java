@@ -35,6 +35,7 @@ class MemberTest {
     member.activate();
     
     assertThat(member.getStatus()).isEqualTo(MemberStatus.ACTIVE);
+    assertThat(member.getDetail().getActivatedAt()).isNotNull();
   }
 
   @Test
@@ -56,6 +57,7 @@ class MemberTest {
     member.deactivate();
     
     assertThat(member.getStatus()).isEqualTo(MemberStatus.DEACTIVATED);
+    assertThat(member.getDetail().getDeactivatedAt()).isNotNull();
     
   }
   
@@ -119,6 +121,20 @@ class MemberTest {
 
     Member.register(MemberRegisterRequest.of("orolsyeo@gmail.com", "nickname", "password"), passwordEncoder);
 
+  }
+
+  @Test
+  void updateInfo() {
+
+    member.activate();
+
+    MemberInfoUpdateRequest memberInfoUpdateRequest = new MemberInfoUpdateRequest("nickname", "password", "introduction");
+    member.updateInfo(memberInfoUpdateRequest);
+    
+    assertThat(member.getNickname()).isEqualTo(memberInfoUpdateRequest.nickname());
+    assertThat(member.getDetail().getProfile().address()).isEqualTo(memberInfoUpdateRequest.profileAddress());
+    assertThat(member.getDetail().getIntroduction()).isEqualTo(memberInfoUpdateRequest.introduction());
+    
   }
   
 }
