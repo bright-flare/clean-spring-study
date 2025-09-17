@@ -1,8 +1,6 @@
 package clean.spring.study.splearn.domain.member;
 
 import clean.spring.study.splearn.domain.shared.AbstractEntity;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -11,13 +9,11 @@ import org.springframework.util.Assert;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Entity
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 public class MemberDetail extends AbstractEntity {
 
-  @Embedded
   private Profile profile;
   
   private String introduction;

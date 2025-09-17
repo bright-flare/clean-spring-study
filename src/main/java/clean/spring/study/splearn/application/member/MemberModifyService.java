@@ -45,6 +45,40 @@ public class MemberModifyService implements MemberRegister {
     return memberRepository.save(member); // 현재 spring data 진영에서는 update를 위하여 save를 명시적으로 호출하는 것을 권유함.
   }
 
+  @Override
+  public Member deactivate(Long memberId) {
+
+    Member member = memberFinder.find(memberId);
+    
+    member.deactivate();
+    
+    return memberRepository.save(member);
+  }
+
+  @Override
+  public Member updateInfo(Long id, MemberInfoUpdateRequest memberInfoUpdateRequest) {
+
+    Member member = memberFinder.find(id);
+    
+    checkDuplicateProfile(member, memberInfoUpdateRequest.profileAddress());
+    
+    member.updateInfo(memberInfoUpdateRequest);
+
+    return memberRepository.save(member);
+  }
+
+  private void checkDuplicateProfile(Member member, String profileAddress) {
+    if (profileAddress.isEmpty()) return;
+
+    Profile currentProfile = member.getDetail().getProfile();
+    if (currentProfile != null && currentProfile.address().equals(profileAddress)) return;
+
+    if (memberRepository.findByProfile(new Profile(profileAddress)).isPresent()) {
+      throw new DuplicateProfileException("이미 사용중인 프로필 주소입니다: " + profileAddress);
+    }
+    
+  }
+
   private void sendWelcomeEmail(Member member) {
     emailSender.send(member.getEmail(), "회원 가입을 환영합니다!", "아래 링크를 클릭해서 등록을 완료해주세요 ~!");
   }

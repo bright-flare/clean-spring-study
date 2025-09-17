@@ -1,10 +1,7 @@
 package clean.spring.study.splearn.domain.member;
 
-import jakarta.persistence.Embeddable;
-
 import java.util.regex.Pattern;
 
-@Embeddable
 public record Profile(String address) {
   
   private static final Pattern EMAIL_PATTERN = Pattern.compile("[a-z0-9]+");

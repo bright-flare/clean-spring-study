@@ -21,6 +21,10 @@
       <unique-constraint name="uk_member_email_address">
         <column-name>email_address</column-name>
       </unique-constraint>
+      
+      <unique-constraint name="uk_member_detail_id">
+        <column-name>detail_id</column-name>
+      </unique-constraint>
     </table>
 
     <!-- Inherited ID from AbstractEntity -->
@@ -29,13 +33,6 @@
         <column name="id"/>
         <generated-value strategy="IDENTITY"/>
       </id>
-
-      <!-- Email (Embedded) -->
-      <embedded name="email">
-        <attribute-override name="email">
-          <column name="email_address" nullable="false" length="150"/>
-        </attribute-override>
-      </embedded>
 
       <!-- Basic attributes -->
       <basic name="nickname">
@@ -50,6 +47,54 @@
         <column name="status" nullable="false" length="50" column-definition="varchar(50)"/>
         <enumerated>STRING</enumerated>
       </basic>
+
+      <one-to-one name="detail" fetch="LAZY">
+        <join-column name="detail_id"/>
+        <cascade>
+          <cascade-all/>
+        </cascade>
+      </one-to-one>
+      
+      <!-- Email (Embedded) -->
+      <embedded name="email">
+        <attribute-override name="email">
+          <column name="email_address" nullable="false" length="150"/>
+        </attribute-override>
+      </embedded>
+    </attributes>
+  </entity>
+
+  <!-- MemberDetail Entity Mapping -->
+  <entity class="clean.spring.study.splearn.domain.member.MemberDetail">
+    <table name="member_detail">
+      <unique-constraint name="uk_member_detail_profile_address">
+        <column-name>profile_address</column-name>
+      </unique-constraint>
+    </table>
+
+    <attributes>
+      <id name="id">
+        <column name="id"/>
+        <generated-value strategy="IDENTITY"/>
+      </id>
+
+      <basic name="introduction">
+        <column column-definition="TEXT"/>
+      </basic>
+
+      <basic name="registeredAt">
+        <column name="registered_at" nullable="false"/>
+      </basic>
+
+      <basic name="activatedAt">
+        <column name="activated_at"/>
+      </basic>
+
+      <basic name="deactivatedAt">
+        <column name="deactivated_at"/>
+      </basic>
+      
+      <embedded name="profile"/>
     </attributes>
   </entity>
 
@@ -58,6 +103,14 @@
     <attributes>
       <basic name="email">
         <column name="email_address" nullable="false" length="150"/>
+      </basic>
+    </attributes>
+  </embeddable>
+  
+  <embeddable class="clean.spring.study.splearn.domain.member.Profile">
+    <attributes>
+      <basic name="address">
+        <column name="profile_address" length="20"/>
       </basic>
     </attributes>
   </embeddable>
