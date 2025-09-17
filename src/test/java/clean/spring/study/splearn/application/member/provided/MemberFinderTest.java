@@ -1,8 +1,8 @@
-package clean.spring.study.splearn.application.provided;
+package clean.spring.study.splearn.application.member.provided;
 
 import clean.spring.study.splearn.application.SplearnTestConfiguration;
-import clean.spring.study.splearn.domain.Member;
-import clean.spring.study.splearn.domain.MemberFixture;
+import clean.spring.study.splearn.domain.member.Member;
+import clean.spring.study.splearn.domain.member.MemberFixture;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,10 +1,10 @@
-package clean.spring.study.splearn.domain;
+package clean.spring.study.splearn.domain.member;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static clean.spring.study.splearn.domain.MemberFixture.createMemberRegisterRequest;
-import static clean.spring.study.splearn.domain.MemberFixture.createPasswordEncoder;
+import static clean.spring.study.splearn.domain.member.MemberFixture.createMemberRegisterRequest;
+import static clean.spring.study.splearn.domain.member.MemberFixture.createPasswordEncoder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -35,6 +35,7 @@ class MemberTest {
     member.activate();
     
     assertThat(member.getStatus()).isEqualTo(MemberStatus.ACTIVE);
+    assertThat(member.getDetail().getActivatedAt()).isNotNull();
   }
 
   @Test
@@ -56,6 +57,7 @@ class MemberTest {
     member.deactivate();
     
     assertThat(member.getStatus()).isEqualTo(MemberStatus.DEACTIVATED);
+    assertThat(member.getDetail().getDeactivatedAt()).isNotNull();
     
   }
   
@@ -92,14 +94,6 @@ class MemberTest {
   }
 
   @Test
-  void changeNickname() {
-    assertThat(member.getNickname()).isEqualTo("bright-flare");
-    
-    member.changeNickname("lumiflare");
-    assertThat(member.getNickname()).isEqualTo("lumiflare");
-  }
-
-  @Test
   void shouldBeActive() {
     assertThat(this.member.isActive()).isFalse();
     
@@ -119,6 +113,30 @@ class MemberTest {
 
     Member.register(MemberRegisterRequest.of("orolsyeo@gmail.com", "nickname", "password"), passwordEncoder);
 
+  }
+
+  @Test
+  void updateInfo() {
+
+    member.activate();
+
+    MemberInfoUpdateRequest memberInfoUpdateRequest = new MemberInfoUpdateRequest("nickname", "password", "introduction");
+    member.updateInfo(memberInfoUpdateRequest);
+    
+    assertThat(member.getNickname()).isEqualTo(memberInfoUpdateRequest.nickname());
+    assertThat(member.getDetail().getProfile().address()).isEqualTo(memberInfoUpdateRequest.profileAddress());
+    assertThat(member.getDetail().getIntroduction()).isEqualTo(memberInfoUpdateRequest.introduction());
+    
+  }
+  
+  @Test
+  void updateInfoFail() {
+    
+    assertThatThrownBy(() -> {
+      MemberInfoUpdateRequest memberInfoUpdateRequest = new MemberInfoUpdateRequest("nickname", "password", "introduction");
+      member.updateInfo(memberInfoUpdateRequest);
+    }).isInstanceOf(IllegalStateException.class);
+    
   }
   
 }

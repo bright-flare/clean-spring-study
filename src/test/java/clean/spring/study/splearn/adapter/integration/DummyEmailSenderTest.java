@@ -1,9 +1,7 @@
 package clean.spring.study.splearn.adapter.integration;
 
-import clean.spring.study.splearn.domain.Email;
+import clean.spring.study.splearn.domain.member.Email;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class DummyEmailSenderTest {
 

@@ -1,4 +1,4 @@
-package clean.spring.study.splearn.domain;
+package clean.spring.study.splearn.domain.member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

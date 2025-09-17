@@ -1,5 +1,6 @@
-package clean.spring.study.splearn.domain;
+package clean.spring.study.splearn.domain.member;
 
+import clean.spring.study.splearn.domain.shared.AbstractEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,10 +10,11 @@ import org.hibernate.annotations.NaturalIdCache;
 import org.springframework.util.Assert;
 
 import static java.util.Objects.requireNonNull;
+import static org.springframework.util.Assert.state;
 
 @Entity
 @Getter
-@ToString(callSuper = true)
+@ToString(callSuper = true, exclude = "detail")
 @NaturalIdCache
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 public class Member extends AbstractEntity {
@@ -26,6 +28,8 @@ public class Member extends AbstractEntity {
 
   private MemberStatus status;
 
+  private MemberDetail detail;
+
   public static Member register(MemberRegisterRequest registerRequest, PasswordEncoder passwordEncoder) {
 
     Member member = new Member();
@@ -34,34 +38,41 @@ public class Member extends AbstractEntity {
     member.nickname = requireNonNull(registerRequest.nickname());
     member.passwordHash = requireNonNull(passwordEncoder.encode(registerRequest.password()));
     member.status = MemberStatus.PENDING;
-
+    member.detail = MemberDetail.create();
+    
     return member;
   }
 
   public void activate() {
 
-    Assert.state(this.status == MemberStatus.PENDING, "PENDING 상태가 아닙니다. 이미 활성화된 회원입니다.");
+    state(this.status == MemberStatus.PENDING, "PENDING 상태가 아닙니다. 이미 활성화된 회원입니다.");
 
     this.status = MemberStatus.ACTIVE;
+    this.detail.updateActivatedAt();
   }
 
   public void deactivate() {
 
-    Assert.state(this.status == MemberStatus.ACTIVE, "ACTIVE 상태가 아닙니다. 이미 비활성화된 회원입니다.");
+    state(this.status == MemberStatus.ACTIVE, "ACTIVE 상태가 아닙니다. 이미 비활성화된 회원입니다.");
 
     this.status = MemberStatus.DEACTIVATED;
+    this.detail.updateDeactivatedAt();
   }
 
   public boolean varifyPassword(String password, PasswordEncoder passwordEncoder) {
     return passwordEncoder.matches(password, this.passwordHash);
   }
 
-  public void changeNickname(String nickname) {
-    this.nickname = requireNonNull(nickname);
-  }
-
   public void changePassword(String password, PasswordEncoder passwordEncoder) {
     this.passwordHash = passwordEncoder.encode(requireNonNull(password));
+  }
+
+  public void updateInfo(MemberInfoUpdateRequest updateRequest) {
+    
+    state(this.status == MemberStatus.ACTIVE, "ACTIVE 상태가 아닙니다. 회원 정보를 수정할 수 없습니다.");
+    
+    this.nickname = updateRequest.nickname();
+    this.detail.updateInfo(updateRequest);
   }
 
   public boolean isActive() {

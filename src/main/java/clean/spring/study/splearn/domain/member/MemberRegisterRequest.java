@@ -1,4 +1,4 @@
-package clean.spring.study.splearn.domain;
+package clean.spring.study.splearn.domain.member;
 
 import jakarta.validation.constraints.Email;
 import org.hibernate.validator.constraints.Length;

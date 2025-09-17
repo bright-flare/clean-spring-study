@@ -1,4 +1,4 @@
-package clean.spring.study.splearn.domain;
+package clean.spring.study.splearn.domain.member;
 
 public interface PasswordEncoder {
   
