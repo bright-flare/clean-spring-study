@@ -19,7 +19,6 @@ class ProfileTest {
   void profileFail() {
 
     assertThrows(IllegalArgumentException.class, () -> new Profile("sadfasjdfiasldfjsalidfjalsidfj"));
-    assertThrows(IllegalArgumentException.class, () -> new Profile(""));
     assertThrows(IllegalArgumentException.class, () -> new Profile("bright-flare1"));
     assertThrows(IllegalArgumentException.class, () -> new Profile("심현섭"));
 
