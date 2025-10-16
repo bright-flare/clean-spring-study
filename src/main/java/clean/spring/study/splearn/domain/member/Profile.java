@@ -8,7 +8,7 @@ public record Profile(String address) {
 
   public Profile {
 
-    if (!Profile.EMAIL_PATTERN.matcher(address).matches()) {
+    if (address == null || (!address.isEmpty() && !Profile.EMAIL_PATTERN.matcher(address).matches())) {
       throw new IllegalArgumentException("이메일 주소 형식이 바르지 않습니다. : " + address);
     }
 

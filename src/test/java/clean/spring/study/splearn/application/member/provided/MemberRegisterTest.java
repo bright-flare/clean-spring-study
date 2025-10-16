@@ -95,7 +95,7 @@ record MemberRegisterTest(MemberRegister memberRegister, EntityManager entityMan
     Member member = registerMember();
     
     memberRegister.activate(member.getId());
-    member = memberRegister.updateInfo(member.getId(), new MemberInfoUpdateRequest("변경된이름", "orol", "자기소개입니다링 "));
+    memberRegister.updateInfo(member.getId(), new MemberInfoUpdateRequest("변경된이름", "orol", "자기소개입니다링 "));
     entityManager.flush();
     entityManager.clear();
     
@@ -106,6 +106,15 @@ record MemberRegisterTest(MemberRegister memberRegister, EntityManager entityMan
 
     assertThatThrownBy(
             () -> memberRegister.updateInfo(member2.getId(), new MemberInfoUpdateRequest("심현섭친구", "orol", "심현섭 "))
+    ).isInstanceOf(DuplicateProfileException.class);
+
+    memberRegister.updateInfo(member2.getId(), new MemberInfoUpdateRequest("심현섭친구", "orolsyeo", "심현섭 "));
+    memberRegister.updateInfo(member.getId(), new MemberInfoUpdateRequest("심현섭친구", "orol", "심현섭 "));
+    memberRegister.updateInfo(member.getId(), new MemberInfoUpdateRequest("심현섭친구", "", "심현섭 "));
+    memberRegister.updateInfo(member.getId(), new MemberInfoUpdateRequest("심현섭친구", "orol", "심현섭 "));
+    
+    assertThatThrownBy(
+            () -> memberRegister.updateInfo(member.getId(), new MemberInfoUpdateRequest("심현섭친구", "orolsyeo", "심현섭 "))
     ).isInstanceOf(DuplicateProfileException.class);
     
   }
