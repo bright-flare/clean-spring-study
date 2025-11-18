@@ -36,7 +36,11 @@ dependencies {
   developmentOnly("org.springframework.boot:spring-boot-docker-compose")
   runtimeOnly("com.h2database:h2")
   runtimeOnly("com.mysql:mysql-connector-j")
+  
   annotationProcessor("org.projectlombok:lombok")
+  testAnnotationProcessor("org.projectlombok:lombok")
+  
+  testCompileOnly("org.projectlombok:lombok")
   testImplementation("org.springframework.boot:spring-boot-starter-test")
   testRuntimeOnly("org.junit.platform:junit-platform-launcher")
   mockitoAgent("org.mockito:mockito-core:5.18.0"){isTransitive = false}
