@@ -41,8 +41,9 @@ dependencies {
   testAnnotationProcessor("org.projectlombok:lombok")
   
   testCompileOnly("org.projectlombok:lombok")
-  testImplementation("org.springframework.boot:spring-boot-starter-test")
   testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+  testImplementation("org.springframework.boot:spring-boot-starter-test")
+  testImplementation("com.tngtech.archunit:archunit-junit5:1.4.1")
   mockitoAgent("org.mockito:mockito-core:5.18.0"){isTransitive = false}
 }
 
