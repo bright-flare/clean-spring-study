@@ -1,6 +1,6 @@
 package clean.spring.study.splearn.domain.member;
 
-import clean.spring.study.splearn.application.member.provided.MemberRegisterRequest;
+import clean.spring.study.splearn.application.member.provided.dto.MemberRegisterRequest;
 import org.springframework.test.util.ReflectionTestUtils;
 
 public class MemberFixture {

@@ -1,4 +1,4 @@
-package clean.spring.study.splearn.application.member.provided;
+package clean.spring.study.splearn.application.member.provided.dto;
 
 import clean.spring.study.splearn.domain.member.MemberRegisterInfo;
 import jakarta.validation.constraints.Email;

@@ -2,7 +2,7 @@ package clean.spring.study.splearn.application.member;
 
 import clean.spring.study.splearn.application.member.provided.MemberFinder;
 import clean.spring.study.splearn.application.member.provided.MemberRegister;
-import clean.spring.study.splearn.application.member.provided.MemberRegisterRequest;
+import clean.spring.study.splearn.application.member.provided.dto.MemberRegisterRequest;
 import clean.spring.study.splearn.application.member.required.EmailSender;
 import clean.spring.study.splearn.application.member.required.MemberRepository;
 import clean.spring.study.splearn.domain.member.*;

@@ -1,6 +1,7 @@
 package clean.spring.study.splearn.application.member.provided;
 
 import clean.spring.study.splearn.application.SplearnTestConfiguration;
+import clean.spring.study.splearn.application.member.provided.dto.MemberRegisterRequest;
 import clean.spring.study.splearn.domain.member.*;
 import jakarta.persistence.EntityManager;
 import jakarta.validation.ConstraintViolationException;

@@ -1,6 +1,6 @@
 package clean.spring.study.splearn.domain.member;
 
-import clean.spring.study.splearn.application.member.provided.MemberRegisterRequest;
+import clean.spring.study.splearn.application.member.provided.dto.MemberRegisterRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -80,17 +80,17 @@ class MemberTest {
 
   @Test
   void verifyPassword() {
-    assertThat(member.varifyPassword("password", passwordEncoder)).isTrue();
-    assertThat(member.varifyPassword("afsd", passwordEncoder)).isFalse();
+    assertThat(member.verifyPassword("password", passwordEncoder)).isTrue();
+    assertThat(member.verifyPassword("afsd", passwordEncoder)).isFalse();
   }
 
   @Test
   void changePassword() {
 
-    assertThat(member.varifyPassword("password", passwordEncoder)).isTrue();
+    assertThat(member.verifyPassword("password", passwordEncoder)).isTrue();
     
     member.changePassword("new-password", passwordEncoder);
-    assertThat(member.varifyPassword("new-password", passwordEncoder)).isTrue();
+    assertThat(member.verifyPassword("new-password", passwordEncoder)).isTrue();
     
   }
 

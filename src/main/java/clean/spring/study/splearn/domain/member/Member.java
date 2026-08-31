@@ -1,6 +1,5 @@
 package clean.spring.study.splearn.domain.member;
 
-import clean.spring.study.splearn.application.member.provided.MemberRegisterRequest;
 import clean.spring.study.splearn.domain.shared.AbstractEntity;
 import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -59,7 +58,7 @@ public class Member extends AbstractEntity {
     this.detail.updateDeactivatedAt();
   }
 
-  public boolean varifyPassword(String password, PasswordEncoder passwordEncoder) {
+  public boolean verifyPassword(String password, PasswordEncoder passwordEncoder) {
     return passwordEncoder.matches(password, this.passwordHash);
   }
 
