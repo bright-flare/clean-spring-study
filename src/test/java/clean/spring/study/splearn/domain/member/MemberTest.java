@@ -1,5 +1,6 @@
 package clean.spring.study.splearn.domain.member;
 
+import clean.spring.study.splearn.application.member.provided.MemberRegisterRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +19,7 @@ class MemberTest {
   @BeforeEach
   void setUp() {
     MemberRegisterRequest request = MemberFixture.createMemberRegisterRequest();
-    this.member = Member.register(request, passwordEncoder);
+    this.member = Member.register(request.toInfo(), passwordEncoder);
   }
 
   @Test
@@ -108,10 +109,10 @@ class MemberTest {
   
   @Test
   void invalidEmail() {
-    assertThatThrownBy(() -> Member.register(createMemberRegisterRequest("invalid email"), passwordEncoder))
+    assertThatThrownBy(() -> Member.register(createMemberRegisterRequest("invalid email").toInfo(), passwordEncoder))
             .isInstanceOf(IllegalArgumentException.class);
 
-    Member.register(MemberRegisterRequest.of("orolsyeo@gmail.com", "nickname", "password"), passwordEncoder);
+    Member.register(MemberRegisterRequest.of("orolsyeo@gmail.com", "nickname", "password").toInfo(), passwordEncoder);
 
   }
 

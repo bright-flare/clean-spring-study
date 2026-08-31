@@ -23,7 +23,7 @@ public class ApiControllerAdvice extends ResponseEntityExceptionHandler {
   * RFC9457 - 예외에 대한 응답 표준
   * */
   @ExceptionHandler({DuplicateEmailException.class, DuplicateProfileException.class})
-  public ProblemDetail emailExceptionHandler(DuplicateEmailException exception) {
+  public ProblemDetail duplicateExceptionHandler(DuplicateEmailException exception) {
     return getProblemDetail(HttpStatus.CONFLICT, exception);
   }
 

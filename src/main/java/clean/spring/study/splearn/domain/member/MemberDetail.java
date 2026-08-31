@@ -1,6 +1,8 @@
 package clean.spring.study.splearn.domain.member;
 
 import clean.spring.study.splearn.domain.shared.AbstractEntity;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -43,8 +45,16 @@ public class MemberDetail extends AbstractEntity {
   }
 
   void updateInfo(MemberInfoUpdateRequest updateRequest) {
-    this.profile = new Profile(updateRequest.profileAddress());
+    this.profile = convertToProfile(updateRequest.profileAddress());
+
     this.introduction = Objects.requireNonNull(updateRequest.introduction());
   }
-  
+
+    private Profile convertToProfile(@NotNull @Size(max = 15) String profileAddress) {
+      if (profileAddress != null && profileAddress.isEmpty()) {
+        return null;
+      }
+      return new Profile(profileAddress);
+    }
+
 }

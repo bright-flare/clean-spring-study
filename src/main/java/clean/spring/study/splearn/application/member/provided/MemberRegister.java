@@ -2,7 +2,6 @@ package clean.spring.study.splearn.application.member.provided;
 
 import clean.spring.study.splearn.domain.member.Member;
 import clean.spring.study.splearn.domain.member.MemberInfoUpdateRequest;
-import clean.spring.study.splearn.domain.member.MemberRegisterRequest;
 import jakarta.validation.Valid;
 
 /**

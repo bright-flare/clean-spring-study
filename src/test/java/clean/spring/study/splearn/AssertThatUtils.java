@@ -1,6 +1,5 @@
 package clean.spring.study.splearn;
 
-import clean.spring.study.splearn.domain.member.MemberRegisterRequest;
 import org.assertj.core.api.AssertProvider;
 import org.springframework.test.json.JsonPathValueAssert;
 

@@ -1,13 +1,13 @@
 package clean.spring.study.splearn.domain.member;
 
+import clean.spring.study.splearn.application.member.provided.MemberRegisterRequest;
 import clean.spring.study.splearn.domain.shared.AbstractEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.NaturalIdCache;
-import org.springframework.util.Assert;
 
 import static java.util.Objects.requireNonNull;
 import static org.springframework.util.Assert.state;
@@ -15,7 +15,7 @@ import static org.springframework.util.Assert.state;
 @Entity
 @Getter
 @ToString(callSuper = true, exclude = "detail")
-@NaturalIdCache
+@NaturalIdCache // Persist context가 아닌, 2차 캐시에 사용된다.
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 public class Member extends AbstractEntity {
 
@@ -30,16 +30,16 @@ public class Member extends AbstractEntity {
 
   private MemberDetail detail;
 
-  public static Member register(MemberRegisterRequest registerRequest, PasswordEncoder passwordEncoder) {
+  public static Member register(MemberRegisterInfo registerInfo, PasswordEncoder passwordEncoder) {
 
     Member member = new Member();
 
-    member.email = new Email(registerRequest.email());
-    member.nickname = requireNonNull(registerRequest.nickname());
-    member.passwordHash = requireNonNull(passwordEncoder.encode(registerRequest.password()));
+    member.email = new Email(registerInfo.email());
+    member.nickname = requireNonNull(registerInfo.nickname());
+    member.passwordHash = requireNonNull(passwordEncoder.encode(registerInfo.password()));
     member.status = MemberStatus.PENDING;
     member.detail = MemberDetail.create();
-    
+
     return member;
   }
 

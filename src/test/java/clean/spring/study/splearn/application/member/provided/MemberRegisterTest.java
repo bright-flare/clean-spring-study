@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
-@Transactional 
+@Transactional
 @Import(SplearnTestConfiguration.class)
 //@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL) // junit-platform.properties 설정으로 대체가능.
 record MemberRegisterTest(MemberRegister memberRegister, EntityManager entityManager) {
@@ -109,14 +109,14 @@ record MemberRegisterTest(MemberRegister memberRegister, EntityManager entityMan
     ).isInstanceOf(DuplicateProfileException.class);
 
     memberRegister.updateInfo(member2.getId(), new MemberInfoUpdateRequest("심현섭친구", "orolsyeo", "심현섭 "));
-    memberRegister.updateInfo(member.getId(), new MemberInfoUpdateRequest("심현섭친구", "orol", "심현섭 "));
     memberRegister.updateInfo(member.getId(), new MemberInfoUpdateRequest("심현섭친구", "", "심현섭 "));
     memberRegister.updateInfo(member.getId(), new MemberInfoUpdateRequest("심현섭친구", "orol", "심현섭 "));
-    
-    assertThatThrownBy(
-            () -> memberRegister.updateInfo(member.getId(), new MemberInfoUpdateRequest("심현섭친구", "orolsyeo", "심현섭 "))
-    ).isInstanceOf(DuplicateProfileException.class);
-    
+    entityManager.flush();
+
+    memberRegister.updateInfo(member.getId(), new MemberInfoUpdateRequest("심현섭친구", "", "심현섭 "));
+    memberRegister.updateInfo(member2.getId(), new MemberInfoUpdateRequest("심현섭친구", "", "심현섭 "));
+    entityManager.flush();
+
   }
 
   @Test
