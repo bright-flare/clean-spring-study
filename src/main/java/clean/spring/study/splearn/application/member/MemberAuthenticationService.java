@@ -1,7 +1,7 @@
 package clean.spring.study.splearn.application.member;
 
 import clean.spring.study.splearn.application.member.provided.MemberAuthenticator;
-import clean.spring.study.splearn.application.member.provided.dto.MemberLoginRequest;
+import clean.spring.study.splearn.application.member.dto.MemberLoginRequest;
 import clean.spring.study.splearn.application.member.provided.exception.LoginFailedException;
 import clean.spring.study.splearn.application.member.required.MemberRepository;
 import clean.spring.study.splearn.domain.member.Email;

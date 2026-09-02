@@ -3,7 +3,7 @@ package clean.spring.study.splearn.adapter.webapi;
 import clean.spring.study.splearn.application.member.provided.MemberRegister;
 import clean.spring.study.splearn.domain.member.Member;
 import clean.spring.study.splearn.domain.member.MemberFixture;
-import clean.spring.study.splearn.application.member.provided.dto.MemberRegisterRequest;
+import clean.spring.study.splearn.application.member.dto.MemberRegisterRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;

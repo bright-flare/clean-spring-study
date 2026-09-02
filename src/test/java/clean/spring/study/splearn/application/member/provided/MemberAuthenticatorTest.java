@@ -1,8 +1,8 @@
 package clean.spring.study.splearn.application.member.provided;
 
 import clean.spring.study.splearn.application.SplearnTestConfiguration;
-import clean.spring.study.splearn.application.member.provided.dto.MemberLoginRequest;
-import clean.spring.study.splearn.application.member.provided.dto.MemberRegisterRequest;
+import clean.spring.study.splearn.application.member.dto.MemberLoginRequest;
+import clean.spring.study.splearn.application.member.dto.MemberRegisterRequest;
 import clean.spring.study.splearn.application.member.provided.exception.LoginFailedException;
 import clean.spring.study.splearn.domain.member.Member;
 import clean.spring.study.splearn.domain.member.MemberFixture;
@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional

@@ -1,4 +1,4 @@
-package clean.spring.study.splearn.application.member.provided.dto;
+package clean.spring.study.splearn.application.member.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;

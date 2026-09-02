@@ -1,6 +1,6 @@
 package clean.spring.study.splearn.application.member.provided;
 
-import clean.spring.study.splearn.application.member.provided.dto.MemberLoginRequest;
+import clean.spring.study.splearn.application.member.dto.MemberLoginRequest;
 import clean.spring.study.splearn.application.member.provided.exception.LoginFailedException;
 import clean.spring.study.splearn.domain.member.Member;
 import jakarta.validation.Valid;

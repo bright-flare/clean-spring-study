@@ -1,6 +1,6 @@
 package clean.spring.study.splearn.domain.member;
 
-import clean.spring.study.splearn.application.member.provided.dto.MemberRegisterRequest;
+import clean.spring.study.splearn.application.member.dto.MemberRegisterRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
