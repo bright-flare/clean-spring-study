@@ -6,7 +6,7 @@
                  version="3.0">
 
   <!-- AbstractEntity MappedSuperclass -->
-  <mapped-superclass class="clean.spring.study.splearn.domain.shared.AbstractEntity">
+  <mapped-superclass class="clean.spring.study.splearn.feature.shared.domain.AbstractEntity">
     <attributes>
       <id name="id">
         <column name="id"/>
@@ -16,7 +16,7 @@
   </mapped-superclass>
   
   <!-- Member Entity Mapping -->
-  <entity class="clean.spring.study.splearn.domain.member.Member">
+  <entity class="clean.spring.study.splearn.feature.member.domain.Member">
     <table name="member">
       <unique-constraint name="uk_member_email_address">
         <column-name>email_address</column-name>
@@ -65,7 +65,7 @@
   </entity>
 
   <!-- MemberDetail Entity Mapping -->
-  <entity class="clean.spring.study.splearn.domain.member.MemberDetail">
+  <entity class="clean.spring.study.splearn.feature.member.domain.MemberDetail">
     <table name="member_detail">
       <unique-constraint name="uk_member_detail_profile_address">
         <column-name>profile_address</column-name>
@@ -99,7 +99,7 @@
   </entity>
 
   <!-- Email Embeddable Mapping -->
-  <embeddable class="clean.spring.study.splearn.domain.member.Email">
+  <embeddable class="clean.spring.study.splearn.feature.member.domain.Email">
     <attributes>
       <basic name="email">
         <column name="email_address" nullable="false" length="150"/>
@@ -107,7 +107,7 @@
     </attributes>
   </embeddable>
   
-  <embeddable class="clean.spring.study.splearn.domain.member.Profile">
+  <embeddable class="clean.spring.study.splearn.feature.member.domain.Profile">
     <attributes>
       <basic name="address">
         <column name="profile_address" length="20"/>
