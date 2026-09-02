@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class InstructorRepositoryImpl implements InstructorRepository {
+public class InstructorRepositoryAdapter implements InstructorRepository {
 
     private final InstructorJpaRepository jpaRepository;
 
