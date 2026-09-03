@@ -1,5 +1,5 @@
 package clean.spring.study.splearn.feature.instructor.domain;
 
-enum InstructorStatus {
+public enum InstructorStatus {
     PENDING, ACTIVE, REJECTED
 }
