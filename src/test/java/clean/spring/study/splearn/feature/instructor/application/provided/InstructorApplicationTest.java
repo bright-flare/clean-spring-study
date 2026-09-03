@@ -18,7 +18,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 @Transactional
 @RequiredArgsConstructor
 class InstructorApplicationTest {

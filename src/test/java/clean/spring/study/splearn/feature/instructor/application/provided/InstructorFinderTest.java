@@ -7,18 +7,12 @@ import clean.spring.study.splearn.feature.member.domain.Member;
 import clean.spring.study.splearn.feature.member.domain.MemberFixture;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 @Transactional
 @RequiredArgsConstructor
 class InstructorFinderTest {
