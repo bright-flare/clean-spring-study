@@ -1,7 +1,5 @@
 package clean.spring.study.splearn.feature.instructor.domain;
 
-import clean.spring.study.splearn.feature.instructor.domain.Instructor;
-import clean.spring.study.splearn.feature.instructor.domain.InstructorStatus;
 import clean.spring.study.splearn.feature.member.domain.Member;
 import clean.spring.study.splearn.feature.member.domain.MemberFixture;
 import org.assertj.core.api.Assertions;
@@ -32,9 +30,8 @@ class InstructorTest {
 
     @Test
     void approve() {
-        Member member = MemberFixture.createActiveMember();
 
-        Instructor instructor = Instructor.apply(member);
+        Instructor instructor = InstructorFixture.createInstructor();
 
         instructor.approve();
 
@@ -43,8 +40,7 @@ class InstructorTest {
 
     @Test
     void approveFailed() {
-        Member member = MemberFixture.createActiveMember();
-        Instructor instructor = Instructor.apply(member);
+        Instructor instructor = InstructorFixture.createActiveInstructor();
         instructor.approve();
 
         assertThatThrownBy(instructor::approve)
@@ -53,8 +49,7 @@ class InstructorTest {
 
     @Test
     void reject() {
-        Member member = MemberFixture.createActiveMember();
-        Instructor instructor = Instructor.apply(member);
+        Instructor instructor = InstructorFixture.createInstructor();
         instructor.reject();
 
         assertThat(instructor.getStatus()).isEqualTo(InstructorStatus.REJECTED);

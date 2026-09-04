@@ -28,9 +28,12 @@ class MemberAuthenticatorTest {
     void login() {
 
         MemberRegisterRequest request = MemberFixture.createMemberRegisterRequest();
-        memberRegister.register(request).activate();
+        Member member = memberRegister.register(request);
+        member.activate();
 
         Member login = memberAuthenticator.login(new MemberLoginRequest(request.email(), request.password()));
+
+        Assertions.assertThat(member).isEqualTo(login);
 
     }
 

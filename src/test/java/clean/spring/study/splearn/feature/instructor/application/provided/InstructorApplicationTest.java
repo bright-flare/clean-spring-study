@@ -3,6 +3,7 @@ package clean.spring.study.splearn.feature.instructor.application.provided;
 import clean.spring.study.splearn.feature.instructor.application.dto.InstructorApplyRequest;
 import clean.spring.study.splearn.feature.instructor.application.required.InstructorRepository;
 import clean.spring.study.splearn.feature.instructor.domain.Instructor;
+import clean.spring.study.splearn.feature.instructor.domain.InstructorFixture;
 import clean.spring.study.splearn.feature.instructor.domain.InstructorStatus;
 import clean.spring.study.splearn.feature.member.application.required.MemberRepository;
 import clean.spring.study.splearn.feature.member.domain.Member;
@@ -11,9 +12,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -46,10 +45,10 @@ class InstructorApplicationTest {
 
         memberRepository.save(member);
 
-        instructorApplication.apply(new InstructorApplyRequest(member.getId()));
+        instructorApplication.apply(InstructorFixture.createApplyRequest(member));
 
-        Assertions.assertThatThrownBy(() -> instructorApplication.apply(new InstructorApplyRequest(member.getId())))
-                .isInstanceOf(DataIntegrityViolationException.class);
+        Assertions.assertThatThrownBy(() -> instructorApplication.apply(InstructorFixture.createApplyRequest(member)))
+                .isInstanceOf(DuplicateInstructorApplicationException.class);
 
     }
 
@@ -77,7 +76,7 @@ class InstructorApplicationTest {
     private Instructor preparePendingInstructor() {
         Member member = MemberFixture.createActiveMember();
         memberRepository.save(member);
-        return instructorApplication.apply(new InstructorApplyRequest(member.getId()));
+        return instructorApplication.apply(InstructorFixture.createApplyRequest(member));
     }
 
 }

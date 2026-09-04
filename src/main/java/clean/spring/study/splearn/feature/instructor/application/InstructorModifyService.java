@@ -1,6 +1,7 @@
 package clean.spring.study.splearn.feature.instructor.application;
 
 import clean.spring.study.splearn.feature.instructor.application.dto.InstructorApplyRequest;
+import clean.spring.study.splearn.feature.instructor.application.provided.DuplicateInstructorApplicationException;
 import clean.spring.study.splearn.feature.instructor.application.provided.InstructorApplication;
 import clean.spring.study.splearn.feature.instructor.application.provided.InstructorFinder;
 import clean.spring.study.splearn.feature.instructor.application.required.InstructorRepository;
@@ -27,9 +28,17 @@ public class InstructorModifyService implements InstructorApplication {
 
         Member member = memberFinder.find(request.memberId());
 
+        checkDuplicateApplication(member);
+
         Instructor instructor = Instructor.apply(member);
 
         return instructorRepository.save(instructor);
+    }
+
+    private void checkDuplicateApplication(Member member) {
+        if (instructorRepository.findById(member.getId()).isPresent()) {
+            throw new DuplicateInstructorApplicationException();
+        }
     }
 
     @Override
