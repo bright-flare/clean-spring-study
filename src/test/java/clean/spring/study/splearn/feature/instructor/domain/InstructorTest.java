@@ -40,7 +40,7 @@ class InstructorTest {
 
     @Test
     void approveFailed() {
-        Instructor instructor = InstructorFixture.createActiveInstructor();
+        Instructor instructor = InstructorFixture.createInstructor();
         instructor.approve();
 
         assertThatThrownBy(instructor::approve)
