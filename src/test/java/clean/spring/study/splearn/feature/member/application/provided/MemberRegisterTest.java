@@ -1,24 +1,22 @@
 package clean.spring.study.splearn.feature.member.application.provided;
 
-import clean.spring.study.splearn.config.SplearnTestConfiguration;
 import clean.spring.study.splearn.feature.member.application.dto.MemberRegisterRequest;
 import clean.spring.study.splearn.feature.member.domain.*;
-import clean.spring.study.splearn.feature.member.domain.*;
+import clean.spring.study.splearn.support.stereotype.ApplicationServiceTest;
 import jakarta.persistence.EntityManager;
 import jakarta.validation.ConstraintViolationException;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@SpringBootTest
-@Transactional
-@Import(SplearnTestConfiguration.class)
-//@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL) // junit-platform.properties 설정으로 대체가능.
-record MemberRegisterTest(MemberRegister memberRegister, EntityManager entityManager) {
+@ApplicationServiceTest
+@RequiredArgsConstructor
+class MemberRegisterTest {
+
+  final MemberRegister memberRegister;
+  final EntityManager entityManager;
 
   @Test
   void register() {
@@ -27,26 +25,26 @@ record MemberRegisterTest(MemberRegister memberRegister, EntityManager entityMan
     assertThat(member.getId()).isNotNull();
     assertThat(member.getStatus()).isEqualTo(MemberStatus.PENDING);
     assertThat(member.getDetail().getRegisteredAt()).isNotNull();
-    
+
   }
-  
+
   @Test
   void duplicateEmailFail() {
-    
+
     Member member = memberRegister.register(MemberFixture.createMemberRegisterRequest());
 
     assertThatThrownBy(() -> memberRegister.register(MemberFixture.createMemberRegisterRequest()))
             .isInstanceOf(DuplicateEmailException.class);
-    
+
   }
-  
+
   @Test
   void activate() {
     Member member = registerMember();
 
     Member activatedMember = memberRegister.activate(member.getId());
     entityManager.flush();
-    
+
     assertThat(activatedMember.getStatus()).isEqualTo(MemberStatus.ACTIVE);
     assertThat(activatedMember.getDetail().getActivatedAt()).isNotNull();
   }
@@ -57,7 +55,7 @@ record MemberRegisterTest(MemberRegister memberRegister, EntityManager entityMan
     entityManager.clear(); // 영속성 컨텍스트 초기화
     return member;
   }
-  
+
   private Member registerMember(String email) {
     Member member = memberRegister.register(MemberFixture.createMemberRegisterRequest(email));
     entityManager.flush(); // 테스트 scope 와 실제 생성될 쿼리를 동일하게 확안하고 싶다,  영속성 컨텍스트에 저장된 엔티티를 DB에 반영
@@ -82,27 +80,27 @@ record MemberRegisterTest(MemberRegister memberRegister, EntityManager entityMan
   @Test
   void updateInfo() {
     Member member = registerMember();
-    
+
     memberRegister.activate(member.getId());
     entityManager.flush();
     entityManager.clear();
 
     member = memberRegister.updateInfo(member.getId(), new MemberInfoUpdateRequest("변경된이름", "orol", "자기소개입니다링 "));
-    
+
     assertThat(member.getDetail().getProfile().address()).isEqualTo("orol");
   }
-  
+
   @Test
   void updateInfoFail() {
     Member member = registerMember();
-    
+
     memberRegister.activate(member.getId());
     memberRegister.updateInfo(member.getId(), new MemberInfoUpdateRequest("변경된이름", "orol", "자기소개입니다링 "));
     entityManager.flush();
     entityManager.clear();
-    
+
     Member member2 = registerMember("orolseyo@gmail.com");
-    memberRegister.activate( member2.getId());
+    memberRegister.activate(member2.getId());
     entityManager.flush();
     entityManager.clear();
 

@@ -3,14 +3,10 @@ package clean.spring.study.splearn.feature.member.application;
 import clean.spring.study.splearn.feature.member.application.provided.MemberFinder;
 import clean.spring.study.splearn.feature.member.application.required.MemberRepository;
 import clean.spring.study.splearn.feature.member.domain.Member;
+import clean.spring.study.splearn.support.stereotype.ApplicationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 
-@Service
-@Transactional
-@Validated
+@ApplicationService
 @RequiredArgsConstructor
 public class MemberQueryService implements MemberFinder {
   

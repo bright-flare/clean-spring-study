@@ -8,14 +8,10 @@ import clean.spring.study.splearn.feature.instructor.application.required.Instru
 import clean.spring.study.splearn.feature.instructor.domain.Instructor;
 import clean.spring.study.splearn.feature.member.application.provided.MemberFinder;
 import clean.spring.study.splearn.feature.member.domain.Member;
+import clean.spring.study.splearn.support.stereotype.ValidatedApplicationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 
-@Service
-@Transactional
-@Validated
+@ValidatedApplicationService
 @RequiredArgsConstructor
 public class InstructorModifyService implements InstructorApplication {
 

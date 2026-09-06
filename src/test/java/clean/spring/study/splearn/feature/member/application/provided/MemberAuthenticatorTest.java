@@ -1,28 +1,21 @@
 package clean.spring.study.splearn.feature.member.application.provided;
 
-import clean.spring.study.splearn.config.SplearnTestConfiguration;
 import clean.spring.study.splearn.feature.member.application.dto.MemberLoginRequest;
 import clean.spring.study.splearn.feature.member.application.dto.MemberRegisterRequest;
 import clean.spring.study.splearn.feature.member.application.provided.exception.LoginFailedException;
 import clean.spring.study.splearn.feature.member.domain.Member;
 import clean.spring.study.splearn.feature.member.domain.MemberFixture;
+import clean.spring.study.splearn.support.stereotype.ApplicationServiceTest;
+import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest
-@Transactional
-@Import(SplearnTestConfiguration.class)
+@ApplicationServiceTest
+@RequiredArgsConstructor
 class MemberAuthenticatorTest {
 
-    @Autowired
-    private MemberAuthenticator memberAuthenticator;
-
-    @Autowired
-    private MemberRegister memberRegister;
+    private final MemberAuthenticator memberAuthenticator;
+    private final MemberRegister memberRegister;
 
     @Test
     void login() {

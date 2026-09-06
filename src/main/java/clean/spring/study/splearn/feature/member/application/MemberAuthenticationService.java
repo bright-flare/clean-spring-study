@@ -1,20 +1,16 @@
 package clean.spring.study.splearn.feature.member.application;
 
-import clean.spring.study.splearn.feature.member.application.provided.MemberAuthenticator;
 import clean.spring.study.splearn.feature.member.application.dto.MemberLoginRequest;
+import clean.spring.study.splearn.feature.member.application.provided.MemberAuthenticator;
 import clean.spring.study.splearn.feature.member.application.provided.exception.LoginFailedException;
 import clean.spring.study.splearn.feature.member.application.required.MemberRepository;
 import clean.spring.study.splearn.feature.member.domain.Email;
 import clean.spring.study.splearn.feature.member.domain.Member;
 import clean.spring.study.splearn.feature.member.domain.PasswordEncoder;
+import clean.spring.study.splearn.support.stereotype.ValidatedApplicationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 
-@Service
-@Validated
-@Transactional
+@ValidatedApplicationService
 @RequiredArgsConstructor
 public class MemberAuthenticationService implements MemberAuthenticator {
 

@@ -3,14 +3,12 @@ package clean.spring.study.splearn.feature.instructor.application;
 import clean.spring.study.splearn.feature.instructor.application.provided.InstructorFinder;
 import clean.spring.study.splearn.feature.instructor.application.required.InstructorRepository;
 import clean.spring.study.splearn.feature.instructor.domain.Instructor;
-import jakarta.transaction.Transactional;
+import clean.spring.study.splearn.support.stereotype.ApplicationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
-@Transactional
+@ApplicationService
 @RequiredArgsConstructor
 public class InstructorQueryService implements InstructorFinder {
 

@@ -4,13 +4,14 @@ import clean.spring.study.splearn.feature.member.adapter.webapi.dto.MemberRegist
 import clean.spring.study.splearn.feature.member.application.provided.MemberRegister;
 import clean.spring.study.splearn.feature.member.domain.Member;
 import clean.spring.study.splearn.feature.member.application.dto.MemberRegisterRequest;
+import clean.spring.study.splearn.support.stereotype.WebApiAdapter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@WebApiAdapter
 @RequiredArgsConstructor
 public class MemberApi {
 

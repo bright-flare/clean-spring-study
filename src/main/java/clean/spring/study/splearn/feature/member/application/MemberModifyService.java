@@ -1,19 +1,15 @@
 package clean.spring.study.splearn.feature.member.application;
 
+import clean.spring.study.splearn.feature.member.application.dto.MemberRegisterRequest;
 import clean.spring.study.splearn.feature.member.application.provided.MemberFinder;
 import clean.spring.study.splearn.feature.member.application.provided.MemberRegister;
-import clean.spring.study.splearn.feature.member.application.dto.MemberRegisterRequest;
 import clean.spring.study.splearn.feature.member.application.required.EmailSender;
 import clean.spring.study.splearn.feature.member.application.required.MemberRepository;
 import clean.spring.study.splearn.feature.member.domain.*;
+import clean.spring.study.splearn.support.stereotype.ValidatedApplicationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 
-@Service
-@Transactional
-@Validated
+@ValidatedApplicationService
 @RequiredArgsConstructor
 public class MemberModifyService implements MemberRegister {
 
