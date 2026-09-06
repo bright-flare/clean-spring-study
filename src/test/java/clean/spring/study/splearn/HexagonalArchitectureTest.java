@@ -63,7 +63,7 @@ public class HexagonalArchitectureTest {
   @ArchTest
   void aggregateDependencies(JavaClasses classes) {
     SlicesRuleDefinition.slices()
-            .matching("tobyspring.splearn.domain.(*)..")
+            .matching(basePackage + "feature.(*).domain")
             .should(onlyCallReadMethodsOfOtherSlices())
             .check(classes);
   }
@@ -86,6 +86,7 @@ public class HexagonalArchitectureTest {
             if (!classesInAnySlice.contains(targetOwner)) continue;
             if (targetOwner.isRecord()) continue;
             if (targetOwner.isEnum()) continue;
+            if (javaClass.isAssignableTo(targetOwner.getName())) continue;  // 부모 클래스 호출은 애그리거트 간 의존이 아니다
 
             String methodName = call.getTarget().getName();
             if (methodName.startsWith("get") || methodName.startsWith("is")

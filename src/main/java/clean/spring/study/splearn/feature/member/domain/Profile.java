@@ -1,8 +1,15 @@
 package clean.spring.study.splearn.feature.member.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+
 import java.util.regex.Pattern;
 
-public record Profile(String address) {
+@Embeddable
+public record Profile(
+        @Column(name = "profile_address", length = 20)
+        String address
+) {
   
   private static final Pattern EMAIL_PATTERN = Pattern.compile("[a-z0-9]+");
 

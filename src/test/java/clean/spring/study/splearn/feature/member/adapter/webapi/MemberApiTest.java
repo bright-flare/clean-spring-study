@@ -1,23 +1,22 @@
 package clean.spring.study.splearn.feature.member.adapter.webapi;
 
 import clean.spring.study.splearn.feature.member.adapter.webapi.dto.MemberRegisterResponse;
+import clean.spring.study.splearn.feature.member.application.dto.MemberRegisterRequest;
 import clean.spring.study.splearn.feature.member.application.provided.MemberRegister;
 import clean.spring.study.splearn.feature.member.application.required.MemberRepository;
 import clean.spring.study.splearn.feature.member.domain.Member;
 import clean.spring.study.splearn.feature.member.domain.MemberFixture;
-import clean.spring.study.splearn.feature.member.application.dto.MemberRegisterRequest;
 import clean.spring.study.splearn.feature.member.domain.MemberStatus;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 import org.springframework.test.web.servlet.assertj.MvcTestResult;
 import org.springframework.transaction.annotation.Transactional;
+import tools.jackson.databind.ObjectMapper;
 
 import static clean.spring.study.splearn.AssertThatUtils.equalsTo;
 import static clean.spring.study.splearn.AssertThatUtils.notNull;
@@ -63,8 +62,8 @@ public class MemberApiTest {
   }
 
   @Test
-  void duplicateEmail() throws JsonProcessingException {
-    
+  void duplicateEmail() {
+
     Member existingMember = memberRegister.register(MemberFixture.createMemberRegisterRequest());
 
     MemberRegisterRequest request = MemberFixture.createMemberRegisterRequest(existingMember.getEmail().email());

@@ -1,6 +1,7 @@
 package clean.spring.study.splearn.feature.member.domain;
 
 import clean.spring.study.splearn.feature.shared.domain.AbstractEntity;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -11,15 +12,22 @@ import org.springframework.util.Assert;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "member_detail", uniqueConstraints = {
+    @UniqueConstraint(name = "uk_member_detail_profile_address", columnNames = "profile_address")
+})
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 public class MemberDetail extends AbstractEntity {
 
+  @Embedded
   private Profile profile;
-  
+
+  @Column(columnDefinition = "TEXT")
   private String introduction;
-  
+
+  @Column(nullable = false)
   private LocalDateTime registeredAt;
   
   private LocalDateTime activatedAt;

@@ -1,7 +1,7 @@
 package clean.spring.study.splearn.feature.member.domain;
 
 import clean.spring.study.splearn.feature.shared.domain.AbstractEntity;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -12,21 +12,32 @@ import static java.util.Objects.requireNonNull;
 import static org.springframework.util.Assert.state;
 
 @Entity
+@Table(name = "member", uniqueConstraints = {
+    @UniqueConstraint(name = "uk_member_email_address", columnNames = "email_address"),
+    @UniqueConstraint(name = "uk_member_detail_id", columnNames = "detail_id")
+})
 @Getter
 @ToString(callSuper = true, exclude = "detail")
 @NaturalIdCache // Persist context가 아닌, 2차 캐시에 사용된다.
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 public class Member extends AbstractEntity {
 
+  @Embedded
   @NaturalId // 자연 키로 사용, 이메일은 유일해야 함, unique 제약 조건을 추가할 수 있음
   private Email email;
 
+  @Column(nullable = false, length = 100)
   private String nickname;
 
+  @Column(nullable = false, length = 200)
   private String passwordHash;
 
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false, length = 50, columnDefinition = "varchar(50)")
   private MemberStatus status;
 
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "detail_id")
   private MemberDetail detail;
 
   public static Member register(MemberRegisterInfo registerInfo, PasswordEncoder passwordEncoder) {
