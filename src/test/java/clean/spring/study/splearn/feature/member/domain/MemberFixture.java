@@ -3,16 +3,23 @@ package clean.spring.study.splearn.feature.member.domain;
 import clean.spring.study.splearn.feature.member.application.dto.MemberRegisterRequest;
 import clean.spring.study.splearn.feature.member.domain.Member;
 import clean.spring.study.splearn.feature.member.domain.PasswordEncoder;
+import org.instancio.Instancio;
 import org.springframework.test.util.ReflectionTestUtils;
+
+import static org.instancio.Select.field;
 
 public class MemberFixture {
  
   public static MemberRegisterRequest createMemberRegisterRequest() {
-    return MemberRegisterRequest.of("bright-flare@splearn.app", "bright-flare", "password");
+    return createMemberRegisterRequest(Instancio.gen().net().email().get());
   }
 
   public static MemberRegisterRequest createMemberRegisterRequest(String invalidEmail) {
-    return MemberRegisterRequest.of(invalidEmail, "nickname", "password");
+
+    return Instancio.of(MemberRegisterRequest.class)
+            .set(field(MemberRegisterRequest::email), invalidEmail)
+            .create();
+
   }
   
   public static PasswordEncoder createPasswordEncoder() {

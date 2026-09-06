@@ -33,7 +33,7 @@ class MemberRegisterTest {
 
     Member member = memberRegister.register(MemberFixture.createMemberRegisterRequest());
 
-    assertThatThrownBy(() -> memberRegister.register(MemberFixture.createMemberRegisterRequest()))
+    assertThatThrownBy(() -> memberRegister.register(MemberFixture.createMemberRegisterRequest(member.getEmail().email())))
             .isInstanceOf(DuplicateEmailException.class);
 
   }

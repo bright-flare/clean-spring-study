@@ -53,7 +53,7 @@ class MemberRepositoryTest {
     Member member = Member.register(MemberFixture.createMemberRegisterRequest().toInfo(), createPasswordEncoder());
     memberRepository.save(member);
     
-    Member member2 = Member.register(MemberFixture.createMemberRegisterRequest().toInfo(), createPasswordEncoder());
+    Member member2 = Member.register(MemberFixture.createMemberRegisterRequest(member.getEmail().email()).toInfo(), createPasswordEncoder());
     assertThatThrownBy(() -> memberRepository.save(member2))
             .isInstanceOf(DataIntegrityViolationException.class);
   }

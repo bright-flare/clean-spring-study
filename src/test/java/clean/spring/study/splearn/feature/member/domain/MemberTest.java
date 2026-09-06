@@ -19,10 +19,12 @@ class MemberTest {
   private final PasswordEncoder passwordEncoder = createPasswordEncoder();
   
   Member member;
+  MemberRegisterRequest request;
   
   @BeforeEach
   void setUp() {
     MemberRegisterRequest request = MemberFixture.createMemberRegisterRequest();
+    this.request = request;
     this.member = Member.register(request.toInfo(), passwordEncoder);
   }
 
@@ -84,14 +86,14 @@ class MemberTest {
 
   @Test
   void verifyPassword() {
-    assertThat(member.verifyPassword("password", passwordEncoder)).isTrue();
+    assertThat(member.verifyPassword(request.password(), passwordEncoder)).isTrue();
     assertThat(member.verifyPassword("afsd", passwordEncoder)).isFalse();
   }
 
   @Test
   void changePassword() {
 
-    assertThat(member.verifyPassword("password", passwordEncoder)).isTrue();
+    assertThat(member.verifyPassword(request.password(), passwordEncoder)).isTrue();
     
     member.changePassword("new-password", passwordEncoder);
     assertThat(member.verifyPassword("new-password", passwordEncoder)).isTrue();

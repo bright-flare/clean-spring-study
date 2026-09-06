@@ -44,6 +44,7 @@ dependencies {
   testRuntimeOnly("org.junit.platform:junit-platform-launcher")
   testImplementation("org.springframework.boot:spring-boot-starter-test")
   testImplementation("com.tngtech.archunit:archunit-junit5:1.4.1")
+  testImplementation("org.instancio:instancio-core:6.0.0")
   mockitoAgent("org.mockito:mockito-core:5.23.0"){isTransitive = false}
 }
 
