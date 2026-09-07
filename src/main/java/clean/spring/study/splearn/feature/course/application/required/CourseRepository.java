@@ -20,4 +20,6 @@ public interface CourseRepository {
 
     List<Course> findByInstructorId(Long instructorId);
 
+    Optional<Course> findByInstructorAndTitle(Instructor instructor, String title);
+
 }

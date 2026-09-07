@@ -8,6 +8,7 @@ import clean.spring.study.splearn.feature.instructor.domain.InstructorStatus;
 import clean.spring.study.splearn.feature.member.application.required.MemberRepository;
 import clean.spring.study.splearn.feature.member.domain.Member;
 import clean.spring.study.splearn.feature.member.domain.MemberFixture;
+import clean.spring.study.splearn.support.test.BaseApplicationSeviceTest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
@@ -19,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Transactional
 @RequiredArgsConstructor
-class InstructorApplicationTest {
+class InstructorApplicationTest extends BaseApplicationSeviceTest {
 
     final InstructorApplication instructorApplication;
     final InstructorRepository instructorRepository;
@@ -27,7 +28,7 @@ class InstructorApplicationTest {
 
     @Test
     void apply() {
-        Member member = MemberFixture.createActiveMember();
+        Member member = prepareMember();
         memberRepository.save(member);
         Instructor instructor = instructorApplication.apply(new InstructorApplyRequest(member.getId()));
 
@@ -41,7 +42,7 @@ class InstructorApplicationTest {
     @Test
     void duplicateApply() {
 
-        Member member = MemberFixture.createActiveMember();
+        Member member = prepareMember();
 
         memberRepository.save(member);
 

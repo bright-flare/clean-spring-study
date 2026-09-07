@@ -4,7 +4,7 @@ import clean.spring.study.splearn.feature.instructor.application.dto.InstructorA
 import clean.spring.study.splearn.feature.instructor.domain.Instructor;
 import clean.spring.study.splearn.feature.member.application.provided.MemberRegister;
 import clean.spring.study.splearn.feature.member.domain.Member;
-import clean.spring.study.splearn.feature.member.domain.MemberFixture;
+import clean.spring.study.splearn.support.test.BaseApplicationSeviceTest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Transactional
 @RequiredArgsConstructor
-class InstructorFinderTest {
+class InstructorFinderTest extends BaseApplicationSeviceTest {
 
     final InstructorFinder instructorFinder;
     final InstructorApplication instructorApplication;
@@ -23,8 +23,8 @@ class InstructorFinderTest {
 
     @Test
     void findById() {
-        Member member = memberRegister.register(MemberFixture.createMemberRegisterRequest());
-        member = memberRegister.activate(member.getId());
+
+        Member member = prepareMember();
 
         Instructor instructor = instructorApplication.apply(new InstructorApplyRequest(member.getId()));
         Instructor found = instructorFinder.findByMember(instructor.getId()).orElseThrow();
