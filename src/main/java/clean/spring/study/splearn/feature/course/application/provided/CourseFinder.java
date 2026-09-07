@@ -1,0 +1,16 @@
+package clean.spring.study.splearn.feature.course.application.provided;
+
+import clean.spring.study.splearn.feature.course.domain.Course;
+
+import java.util.List;
+
+/**
+ * 강의를 조회
+ */
+public interface CourseFinder {
+    Course find(Long courseId);
+
+    List<Course> findByTitle(String keyword);
+
+
+}
