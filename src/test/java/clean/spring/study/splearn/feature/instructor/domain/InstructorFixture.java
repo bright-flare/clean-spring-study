@@ -25,4 +25,10 @@ public class InstructorFixture {
         return new InstructorApplyRequest(member.getId());
     }
 
+    public static Instructor createActiveInstructor(Member member) {
+        Instructor instructor = createInstructor(member);
+        instructor.approve();
+        return instructor;
+    }
+
 }

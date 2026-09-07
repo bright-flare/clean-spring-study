@@ -15,6 +15,16 @@ import java.util.Objects;
 import static java.util.Objects.requireNonNull;
 import static org.springframework.util.Assert.state;
 
+@Table(
+        name = "course",
+        uniqueConstraints = @UniqueConstraint(
+                name = "uk_instructor_title",
+                columnNames = {
+                        "instructorId",
+                        "title"
+                }
+        )
+)
 @Entity
 @Getter
 @ToString(callSuper = true, exclude = {})
@@ -25,6 +35,7 @@ public class Course extends AbstractEntity {
     private String title;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "instructor_id", nullable = false)
     private Instructor instructor;
 
     @Enumerated(EnumType.STRING)
@@ -34,7 +45,7 @@ public class Course extends AbstractEntity {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "course")
     private CourseDetail detail;
 
-    public Course(String title, Instructor instructor, @Nullable String description ) {
+    public Course(String title, Instructor instructor, @Nullable String description) {
 
         instructor.ensureActive();
 

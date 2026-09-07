@@ -12,5 +12,6 @@ public interface CourseFinder {
 
     List<Course> findByTitle(String keyword);
 
+    List<Course> findByInstructor(Long instructorId);
 
 }
