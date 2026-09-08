@@ -11,7 +11,7 @@ import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @ApplicationServiceTest
-public class BaseApplicationSeviceTest {
+public class BaseApplicationServiceTest {
 
     @Autowired
     MemberRegister memberRegister;

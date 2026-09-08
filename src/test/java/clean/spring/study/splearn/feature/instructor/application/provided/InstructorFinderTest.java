@@ -4,7 +4,7 @@ import clean.spring.study.splearn.feature.instructor.application.dto.InstructorA
 import clean.spring.study.splearn.feature.instructor.domain.Instructor;
 import clean.spring.study.splearn.feature.member.application.provided.MemberRegister;
 import clean.spring.study.splearn.feature.member.domain.Member;
-import clean.spring.study.splearn.support.test.BaseApplicationSeviceTest;
+import clean.spring.study.splearn.support.test.BaseApplicationServiceTest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Transactional
 @RequiredArgsConstructor
-class InstructorFinderTest extends BaseApplicationSeviceTest {
+class InstructorFinderTest extends BaseApplicationServiceTest {
 
     final InstructorFinder instructorFinder;
     final InstructorApplication instructorApplication;

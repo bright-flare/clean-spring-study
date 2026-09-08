@@ -8,7 +8,7 @@ import clean.spring.study.splearn.feature.instructor.domain.InstructorStatus;
 import clean.spring.study.splearn.feature.member.application.required.MemberRepository;
 import clean.spring.study.splearn.feature.member.domain.Member;
 import clean.spring.study.splearn.feature.member.domain.MemberFixture;
-import clean.spring.study.splearn.support.test.BaseApplicationSeviceTest;
+import clean.spring.study.splearn.support.test.BaseApplicationServiceTest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Transactional
 @RequiredArgsConstructor
-class InstructorApplicationTest extends BaseApplicationSeviceTest {
+class InstructorApplicationTest extends BaseApplicationServiceTest {
 
     final InstructorApplication instructorApplication;
     final InstructorRepository instructorRepository;

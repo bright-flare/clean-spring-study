@@ -2,6 +2,7 @@ package clean.spring.study.splearn.feature.course.application;
 
 import clean.spring.study.splearn.feature.course.application.provided.CourseCreator;
 import clean.spring.study.splearn.feature.course.application.provided.CourseFinder;
+import clean.spring.study.splearn.feature.course.application.provided.CourseValidator;
 import clean.spring.study.splearn.feature.course.application.provided.dto.CourseCreateRequest;
 import clean.spring.study.splearn.feature.course.application.provided.dto.CourseInfoUpdateRequest;
 import clean.spring.study.splearn.feature.course.application.required.CourseRepository;
@@ -17,6 +18,7 @@ public class CourseModifyService implements CourseCreator {
 
     private final CourseRepository courseRepository;
     private final CourseFinder courseFinder;
+    private final CourseValidator courseValidator;
     private final InstructorFinder instructorFinder;
 
     @Override
@@ -24,13 +26,24 @@ public class CourseModifyService implements CourseCreator {
 
         Instructor instructor = instructorFinder.findById(request.instructorId());
 
+        courseValidator.validateForCreate(instructor, request);
 
+        Course course = new Course(request.title(), instructor, request.description());
 
-        return null;
+        return courseRepository.save(course);
     }
 
     @Override
     public Course updateInfo(Long courseId, CourseInfoUpdateRequest request) {
-        return null;
+
+        Course course = courseFinder.find(courseId);
+
+        courseValidator.validateForUpdate(course, request);
+
+        course.updateInfo(request.toInfo());
+
+        return courseRepository.save(course);
+
     }
+
 }
