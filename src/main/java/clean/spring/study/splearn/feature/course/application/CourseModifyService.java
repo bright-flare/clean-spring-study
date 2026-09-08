@@ -2,6 +2,7 @@ package clean.spring.study.splearn.feature.course.application;
 
 import clean.spring.study.splearn.feature.course.application.provided.CourseCreator;
 import clean.spring.study.splearn.feature.course.application.provided.CourseFinder;
+import clean.spring.study.splearn.feature.course.application.provided.CoursePublisher;
 import clean.spring.study.splearn.feature.course.application.provided.CourseValidator;
 import clean.spring.study.splearn.feature.course.application.provided.dto.CourseCreateRequest;
 import clean.spring.study.splearn.feature.course.application.provided.dto.CourseInfoUpdateRequest;
@@ -14,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @ValidatedApplicationService
 @RequiredArgsConstructor
-public class CourseModifyService implements CourseCreator {
+public class CourseModifyService implements CourseCreator, CoursePublisher {
 
     private final CourseRepository courseRepository;
     private final CourseFinder courseFinder;
@@ -46,4 +47,39 @@ public class CourseModifyService implements CourseCreator {
 
     }
 
+    @Override
+    public Course submitForReview(Long courseId) {
+
+        Course course = courseFinder.find(courseId);
+
+        courseValidator.validateForReview(course);
+
+        course.submitForReview();
+
+        return courseRepository.save(course);
+    }
+
+    @Override
+    public Course publish(Long courseId) {
+
+        Course course = courseFinder.find(courseId);
+
+        courseValidator.validateForPublish(course);
+
+        course.publish();
+
+        return courseRepository.save(course);
+    }
+
+    @Override
+    public Course archive(Long courseId) {
+
+        Course course = courseFinder.find(courseId);
+
+        courseValidator.validateForArchive(course);
+
+        course.archive();
+
+        return courseRepository.save(course);
+    }
 }

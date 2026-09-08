@@ -56,7 +56,7 @@ class CourseValidatorTest extends BaseApplicationServiceTest {
         courseValidator.validateForUpdate(course1_1, CourseFixture.createCourseUpdateRequest(course1_1.getTitle()));
 
         // title 변경하는데 중복 -> OK
-        Assertions.assertThatThrownBy(() -> courseValidator.validateForUpdate(course1_1, CourseFixture.createCourseUpdateRequest(course1_1.getTitle())))
+        Assertions.assertThatThrownBy(() -> courseValidator.validateForUpdate(course1, CourseFixture.createCourseUpdateRequest(course1_1.getTitle())))
                 .isInstanceOfSatisfying(
                         ValidationException.class,
                         e -> assertThat(e.getErrors()).hasSize(1)

@@ -1,5 +1,8 @@
 package clean.spring.study.splearn.support.test;
 
+import clean.spring.study.splearn.feature.course.application.provided.CourseCreator;
+import clean.spring.study.splearn.feature.course.domain.Course;
+import clean.spring.study.splearn.feature.course.domain.CourseFixture;
 import clean.spring.study.splearn.feature.instructor.application.provided.InstructorApplication;
 import clean.spring.study.splearn.feature.instructor.domain.Instructor;
 import clean.spring.study.splearn.feature.instructor.domain.InstructorFixture;
@@ -19,12 +22,16 @@ public class BaseApplicationServiceTest {
     @Autowired
     InstructorApplication instructorApplication;
 
+    @Autowired
+    CourseCreator courseCreator;
+
     protected Member member;
     protected Instructor instructor;
+    protected Course course;
 
     @NonNull
     protected Instructor prepareInstructor() {
-        this.member = prepareMember();
+        prepareMember();
 
         this.instructor = instructorApplication.apply(InstructorFixture.createApplyRequest(member));
         instructor.approve();
@@ -37,5 +44,14 @@ public class BaseApplicationServiceTest {
         this.member.activate();
 
         return this.member;
+    }
+
+    protected Course prepareCourse() {
+        prepareInstructor();
+
+        course = courseCreator.create(CourseFixture.createCourseCreateRequest(instructor.getId(), "title"));
+        course.updateInfo(CourseFixture.createCourseUpdateRequest(null).toInfo());
+
+        return this.course;
     }
 }
