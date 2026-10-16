@@ -27,7 +27,7 @@ import static org.springframework.util.Assert.state;
 )
 @Entity
 @Getter
-@ToString(callSuper = true, exclude = {})
+@ToString(callSuper = true, exclude = {"instructor"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Course extends AbstractEntity {
 

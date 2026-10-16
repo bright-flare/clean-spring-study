@@ -89,4 +89,7 @@ public class Member extends AbstractEntity {
     return this.status == MemberStatus.ACTIVE;
   }
 
+  public void ensureActive() {
+    state(this.status == MemberStatus.ACTIVE, "ACTIVE 상태가 아닙니다.");
+  }
 }
